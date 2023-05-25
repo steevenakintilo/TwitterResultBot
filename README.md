@@ -15,7 +15,7 @@ You also need to download google chrome and the chromedriver link to the version
 Link to download google chrome: https://www.google.com/intl/fr_fr/chrome/
 Link to download the chromedriver: https://chromedriver.chromium.org/downloads
 
-Then Unzip the chromedriver on the same path of this code
+Then Unzip the chromedriver on the same path as this code
 
 Download all the modules required for the bot to work using this command:
 
