@@ -29,3 +29,19 @@ To start the bot just do
 ```bash
     python main.py
 ```
+## Configuration file
+To add account just fill account_username and account_password with the username and password of the account you want to add
+
+```yml
+#Account info write the username of all your account
+account_username:
+  - "test1234"
+  - "test4444"
+  - "test0000"
+
+#Account info write the password of all your account
+account_password:
+  - "twitter1234"
+  - "twitter4444"
+  - "twitter0000"
+```
