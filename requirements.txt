@@ -1,0 +1,4 @@
+PyYAML==6.0
+selenium==4.9.1
+snscrape==0.6.2.20230321.dev13+g786815d
+discord-webhook==1.1.0
