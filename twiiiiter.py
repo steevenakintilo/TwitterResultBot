@@ -7,7 +7,6 @@ import time
 import pickle
 
 from selenium.webdriver.common.by import By
-from get_tweet import *
 import traceback
 from random import randint
 import yaml
