@@ -134,7 +134,7 @@ def forever_loop():
         except Exception as e:
             print("Flop " + str(e))
             time.sleep(600)
-        time.sleep(randint(86400,172800))
+        time.sleep(172800)
 
 
 def print_file_info(path):
