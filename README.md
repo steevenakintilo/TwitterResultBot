@@ -1,6 +1,6 @@
 # TwitterResultBot
 
-A bot that will take a screenshot of your recent mention and dm to see if you have one a giveaway
+A bot that will take a screenshot of your recent mention + direct message and will send it to your discord server to see if you have won one a giveaway
 This bot is really usefull if you have several bot and you don't want to check if you won somethig by hand
 
 ## Requirements
