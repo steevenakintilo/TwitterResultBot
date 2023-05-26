@@ -154,7 +154,7 @@ def send_message_discord(msg,path,only_msg):
                 webhook.add_file(file=f.read(), filename=path)
     response = webhook.execute()
 
-def take_screen_of_following(S,account):
+def take_screen_of_mention(S,account):
     try:
         my_url = "https://twitter.com/notifications/mentions"
         S.driver.get(my_url)
