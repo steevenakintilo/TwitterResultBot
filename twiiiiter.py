@@ -20,7 +20,8 @@ class Scraper:
     
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
-    driver = webdriver.Chrome(executable_path="chromedriver", options=options)  # to open the chromedriver    
+    options.add_argument("--log-level=3")
+    driver = webdriver.Chrome( options=options)  # to open the chromedriver    
 
     username_xpath = '//*[@id="layers"]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[5]/label/div/div[2]/div/input'
     
@@ -209,7 +210,7 @@ def main_one():
         accept_coockie(S)
         time.sleep(S.wait_time)
         print("Picture from " + str(username_info[i]) + " account")
-        take_screen_of_following(S,username_info[i])
+        take_screen_of_mention(S,username_info[i])
         send_message_discord(str("Picture from " + str(username_info[i]) + " account"),S.path1,True)
         if check_dm == True:
             take_screen_of_dm(S,username_info[i])
