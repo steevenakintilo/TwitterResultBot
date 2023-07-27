@@ -162,17 +162,13 @@ def take_screen_of_mention(S,account):
         S.driver.execute_script("document.body.style.zoom='50%'")
         S.driver.save_screenshot("screens/mention/"+str(account)+"_mention.png")
         S.path1 = (str("screens/mention/"+str(account)+"_mention.png"))
-        print(S.path1)
-        print("prout")
-
+        
     except:
         print("Error during screen of this account " , account)
         time.sleep(30)
         S.driver.save_screenshot("screens/mention/"+str(account)+"_mention.png")
         S.path1 = (str("screens/mention/"+str(account)+"_mention.png"))
-        print(S.path1)
-        print("prout")
-
+        
 
 def take_screen_of_dm(S,account):
     try:
@@ -183,16 +179,12 @@ def take_screen_of_dm(S,account):
         S.driver.save_screenshot("screens/dm/"+str(account)+"_dm.png")
         
         S.path2 = (str("screens/dm/"+str(account)+"_dm.png"))
-        print(S.path2)
-        print("prout")
-
+        
 
     except:        
         S.path2 = (str("screens/dm/"+str(account)+"_dm.png"))
         time.sleep(30)
-        print(S.path2)
-        print("prout")
-
+        
 def main_one():
     print("Inside main one")
     giveaway_done = 0
@@ -224,6 +216,5 @@ def main_one():
             send_message_discord(str("Picture from " + str(username_info[i]) + " account"),S.path2,True)
         print("Screenshot finished for this account sleeping a bit")
         time.sleep(20)
-        print("Good Good ")
     print("End of the program")
     send_message_discord("Screenshot done for today bye bye",S.path1,False)
