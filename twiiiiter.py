@@ -185,7 +185,17 @@ def take_screen_of_dm(S,account):
     except:        
         S.path2 = (str("screens/dm/"+str(account)+"_dm.png"))
         time.sleep(30)
+
+def check_login_good(selenium_session):
+    try:
+        selenium_session.driver.get("https://twitter.com/home")
+        element = WebDriverWait(selenium_session.driver, 15).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="AppTabBar_Notifications_Link"]')))
+        return True
+    except Exception as e:
         
+        return False
+       
 def main_one():
     print("Inside main one")
     giveaway_done = 0
@@ -202,7 +212,11 @@ def main_one():
         time.sleep(1)
         S = Scraper()
         login(S,username_info[i],password_info[i])
-        time.sleep(3)   
+        time.sleep(3)
+        if check_login_good(S) == False:
+            print(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file")
+            print("Skipping the account")
+            continue
         accept_coockie(S)
         time.sleep(S.wait_time)    
         accept_notification(S)
