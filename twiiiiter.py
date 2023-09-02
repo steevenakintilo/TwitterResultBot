@@ -36,12 +36,12 @@ class Scraper:
     path2 = ""
     
 
-def login(S,_username,_password):
-    try:
 
+def login(S,_username,_password):
+
+    try:
         S.driver.get("https://twitter.com/i/flow/login")
         print("Starting Twitter")
-
         #USERNAME
         element = WebDriverWait(S.driver, 30).until(
         EC.presence_of_element_located((By.XPATH, S.username_xpath)))
@@ -78,11 +78,65 @@ def login(S,_username,_password):
         login_button = S.driver.find_element(By.XPATH,S.login_button_xpath)
         login_button.click()
         print("login done")
-
+        return True
         #print("Closing Twitter")
     except:
-        print("Error either selenium or wrong username restart please")
-        quit()
+        time.sleep(5)
+        for i in range(3):
+            time.sleep(5)
+            if check_login_good(S) == True:
+                return True
+        
+        if retry_login(S,_username,_password) == True:
+            return True
+        
+        print("wrong username of password")
+        print("skipping the account")
+        return False
+
+def retry_login(S,_username,_password):
+
+    try:
+        S.driver.get("https://twitter.com/i/flow/login")
+        #USERNAME
+        element = WebDriverWait(S.driver, 30).until(
+        EC.presence_of_element_located((By.XPATH, S.username_xpath)))
+
+        username = S.driver.find_element(By.XPATH,S.username_xpath)
+        username.send_keys(_username)    
+        
+        element = WebDriverWait(S.driver, 30).until(
+        EC.presence_of_element_located((By.XPATH, S.button_xpath)))
+
+
+        #FIRST BUTTON
+
+        button = S.driver.find_element(By.XPATH,S.button_xpath)
+        button.click()
+
+
+        #PASSWORD
+
+        element = WebDriverWait(S.driver, 30).until(
+        EC.presence_of_element_located((By.XPATH, S.password_xpath)))
+        
+        password = S.driver.find_element(By.XPATH,S.password_xpath)
+        password.send_keys(_password)
+
+
+        #LOGIN BUTTON
+
+        element = WebDriverWait(S.driver, 30).until(
+        EC.presence_of_element_located((By.XPATH, S.login_button_xpath)))
+        
+        login_button = S.driver.find_element(By.XPATH,S.login_button_xpath)
+        login_button.click()
+        return True
+        #print("Closing Twitter")
+    except:
+        time.sleep(5)        
+        print("reloging failed")
+        return False
 
 def accept_coockie(S):
     try:
@@ -95,7 +149,6 @@ def accept_coockie(S):
         cookie_button.click()
 
     except:
-        print("error")
         pass    
     
     
@@ -123,7 +176,6 @@ def accept_notification(S):
         cookie_button.click()
 
     except:
-        print("error")
         pass    
     
     print("notification done")
@@ -195,7 +247,19 @@ def check_login_good(selenium_session):
     except Exception as e:
         
         return False
-       
+
+
+def check_if_good_account_login(S,account):
+    try:
+        S.driver.get("https://twitter.com/"+account)
+        element = WebDriverWait(S.driver, 3).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR,'[data-testid="userActions"]')))
+        u = S.driver.find_element(By.CSS_SELECTOR,'[data-testid="userActions"]')
+        print("Bot didn't log in to the right account let's retry login")
+        return False
+    except Exception as e:
+        return True
+   
 def main_one():
     print("Inside main one")
     giveaway_done = 0
@@ -223,6 +287,29 @@ def main_one():
         time.sleep(S.wait_time)
         accept_coockie(S)
         time.sleep(S.wait_time)
+
+        for w in range(10):
+            if check_if_good_account_login(S,username_info[i]) == False:
+                time.sleep(2)
+                S = Scraper()
+                if login(S,username_info[i],password_info[i]) == False:
+                    account_num = 0
+                    continue
+                time.sleep(3)
+                if check_login_good(S) == False:
+                    print(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file")
+                    print("Skipping the account")
+                    account_num = 0
+                    continue
+                accept_coockie(S)
+                time.sleep(S.wait_time)    
+                accept_notification(S)
+                time.sleep(S.wait_time)
+                accept_coockie(S)
+                time.sleep(S.wait_time)
+            else:
+                break
+
         print("Picture from " + str(username_info[i]) + " account")
         take_screen_of_mention(S,username_info[i])
         send_message_discord(str("Picture from " + str(username_info[i]) + " account"),S.path1,True)
