@@ -279,6 +279,7 @@ def main_one():
         time.sleep(3)
         if check_login_good(S) == False:
             print(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file")
+            send_message_discord(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file","",False)
             print("Skipping the account")
             continue
         accept_coockie(S)
@@ -299,6 +300,7 @@ def main_one():
                 if check_login_good(S) == False:
                     print(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file")
                     print("Skipping the account")
+                    send_message_discord(f"The account is locked or password of {username_info[i]} is wrong change it on the configuration.yml file","",False)
                     account_num = 0
                     continue
                 accept_coockie(S)
